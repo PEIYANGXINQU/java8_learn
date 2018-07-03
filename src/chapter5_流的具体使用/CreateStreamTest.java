@@ -1,9 +1,5 @@
 package chapter5_流的具体使用;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -16,7 +12,7 @@ public class CreateStreamTest {
 
     public static void main(String[] args) {
 
-        Stream<String> stringStream = Stream.of("cris", "abc", "jjl").map(String::toUpperCase);
+/*        Stream<String> stringStream = Stream.of("cris", "abc", "jjl").map(String::toUpperCase);
         stringStream.forEach(System.out::println);
 
         int[] arr = {1, 4, 5, 9};
@@ -30,7 +26,17 @@ public class CreateStreamTest {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        /*     Stream.iterate(0, n -> n+2).limit(10).forEach(System.out::println);
+         *//*斐波拉契元祖数列*//*
+        Stream<int[]> limit = Stream.iterate(new int[]{0, 1}, n -> new int[]{n[1], n[0] + n[1]}).limit(5);
+        limit.forEach(n -> System.out.print("("+ n[0] + "," + n[1] +"), "));
+        *//*斐波拉契数列*//*
+        Stream.iterate(new int[]{0,1}, n -> new int[]{n[1],n[0]+n[1]}).limit(10).map(n -> n[0]).forEach(n -> System.out.print(n+","));
+*/
+        Stream<Integer> limit1 = Stream.generate(() -> (int) (Math.random() * 10)).limit(10);
+        limit1.forEach(System.out::println);
 
     }
 }
