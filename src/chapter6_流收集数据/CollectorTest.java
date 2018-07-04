@@ -5,6 +5,10 @@ import chapter4_流.Type;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * @ClassName CollectorTest
@@ -20,11 +24,67 @@ public class CollectorTest {
         dishes = Arrays.asList(new Dish("鲨鱼肉", false, 1000, Type.FISH),
                 new Dish("炒牛肉", false, 800, Type.MEAT),
                 new Dish("蔬菜沙拉", true, 400, Type.OTHER),
-                new Dish("酸菜鱼", false, 900, Type.FISH)
+                new Dish("酸菜鱼", false, 850, Type.FISH)
         );
     }
 
     public static void main(String[] args) {
+
+        Map<Type, Set<CaloricLevel>> collect = dishes.stream().collect(groupingBy(Dish::getType, mapping(dish -> {
+            if (dish.getCalories() < 500) {
+                return CaloricLevel.DIET;
+            } else if (dish.getCalories() < 900) {
+                return CaloricLevel.NORMAL;
+            } else {
+                return CaloricLevel.FAT;
+            }
+        }, toSet())));
+        System.out.println(collect);
+
+        /*Map<Type, Integer> collect = dishes.stream().collect(groupingBy(Dish::getType, summingInt(Dish::getCalories)));
+        System.out.println(collect);*/
+
+
+       /* Map<Type, Optional<Dish>> collect = dishes.stream().collect(groupingBy(Dish::getType, maxBy(Comparator.comparingInt(Dish::getCalories))));
+        System.out.println(collect);
+        Map<Type, Dish> collect1 = dishes.stream().collect(groupingBy(Dish::getType, collectingAndThen(maxBy(Comparator.comparing(Dish::getCalories)), Optional::get)));
+        System.out.println(collect1);*/
+
+        /*        *//*多级分组之按照类别计算每个类别的菜的数量*//*
+        Map<Type, Long> collect = dishes.stream().collect(groupingBy(Dish::getType, counting()));
+        System.out.println(collect);*/
+
+
+
+        /*多级分组*/
+       /* Map<Type, Map<CaloricLevel, List<Dish>>> collect = dishes.stream().collect(groupingBy(Dish::getType, groupingBy(dish -> {
+            if (dish.getCalories() < 600) {
+                return CaloricLevel.DIET;
+            } else if (dish.getCalories() < 900) {
+                return CaloricLevel.NORMAL;
+            } else {
+                return CaloricLevel.FAT;
+            }
+        })));
+        System.out.println(collect);*/
+
+
+        /*将所有菜系按照卡路里的高低分组*/
+     /*   Map<CaloricLevel, List<Dish>> collect = dishes.stream().collect(groupingBy(dish -> {
+            if (dish.getCalories() < 600) {
+                return CaloricLevel.DIET;
+            } else if (dish.getCalories() < 900) {
+                return CaloricLevel.NORMAL;
+            } else {
+                return CaloricLevel.FAT;
+            }
+        }));
+        System.out.println(collect);
+*/
+
+        /*将所有的菜系按照类别分组*/
+       /* Map<Type, List<Dish>> collect = dishes.stream().collect(groupingBy(Dish::getType));
+        System.out.println(collect);*/
 
        /* long count = dishes.stream().count();
         Long collect = dishes.stream().collect(counting());
@@ -44,6 +104,7 @@ public class CollectorTest {
        /* IntSummaryStatistics collect2 = dishes.stream().collect(summarizingInt(Dish::getCalories));
         System.out.println(collect2);   //IntSummaryStatistics{count=4, sum=3100, min=400, average=775.000000, max=1000}*/
 
+        /*获取所有菜名*/
 /*        String collect1 = dishes.stream().map(Dish::getName).collect(joining(","));
         System.out.println(collect1);
         String collect2 = dishes.stream().map(Dish::toString).collect(joining(","));
