@@ -94,11 +94,11 @@ public class CollectorTest {
         System.out.println(collect1);*/
 
         /*计算所有的菜系卡路里之和（比我们之前使用map，然后reduce又简洁了不少）*/
-        /*Integer collect1 = dishes.stream().collect(summingInt(Dish::getCalories));
-        System.out.println(collect1);*/
+        Integer collect1 = dishes.stream().collect(summingInt(Dish::getCalories));
+        System.out.println(collect1);
 /*        Integer collect3 = dishes.stream().collect(reducing(0, Dish::getCalories, (x, y) -> x + y));
         Integer collect4 = dishes.stream().collect(reducing(0, Dish::getCalories, Integer::sum));
-        int sum = dishes.stream().mapToInt(Dish::getCalories).sum();*/
+        int sum = dishes.stream().mapToInt(Dish::getCalories).sum();
 
         /*一次性完成数据的所有常见统计操作（个数，求和，最值，平均值）*/
        /* IntSummaryStatistics collect2 = dishes.stream().collect(summarizingInt(Dish::getCalories));
