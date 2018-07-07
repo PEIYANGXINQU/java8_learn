@@ -17,7 +17,6 @@ public class TestPeek {
                 .filter(x -> x > 6).peek(x -> System.out.println("filter:" + x))
                 .collect(Collectors.toList());
 
-
     }
 
 }
