@@ -18,20 +18,6 @@ public class Shop {
         this.name = name;
     }
 
-    public static double calculatePrice(String productName) {
-        //查询数据库，或者联系商品供应商确定折扣等服务我们这里使用delay方法模拟
-        delay();
-        return new Random().nextDouble() * productName.charAt(0) + productName.charAt(1);
-    }
-
-    public static void delay() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     /*测试异步处理的基准：在异步处理的过程中，调用方可以继续干其他事*/
     public static void main(String[] args) {
         Shop shop = new Shop("亚马逊");
@@ -46,6 +32,33 @@ public class Shop {
         }
         System.out.println(System.currentTimeMillis() - start);
     }
+
+
+    public static double calculatePrice(String productName) {
+        //查询数据库，或者联系商品供应商确定折扣等服务我们这里使用delay方法模拟
+//        delay();
+        randomDelay();
+        return new Random().nextDouble() * productName.charAt(0) + productName.charAt(1);
+    }
+
+    public static void delay() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*随机延迟，模拟网络堵塞*/
+    public static void randomDelay() {
+        int delay = new Random().nextInt(2000) + 500;
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public String getName() {
         return name;
